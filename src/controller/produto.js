@@ -12,7 +12,11 @@ class controllerProduto {
 
     async PegarUm(req, res) {
         try {
-            res.status(200).send('oi')
+
+           const id = req.params.id
+           const produto = await ServiceProduto.PegarUm(id)
+
+            res.status(200).send({ data: produto })
         } catch (error) {
             res.status(500).send({ msg: error. message })
         }
@@ -32,9 +36,10 @@ class controllerProduto {
 
     async Alterar(req, res) {
         try {
+            const id = req.params.id
             const { nome, disponivel, qtde } = req.body
 
-            await ServiceProduto.Alterar(nome, disponivel, qtde)
+            await ServiceProduto.Alterar(id, nome, disponivel, qtde)
 
             res.status(200).send()
         } catch (error) {
@@ -44,7 +49,12 @@ class controllerProduto {
 
     async Deletar(req, res) {
         try {
-            res.status(200).send('oi')
+
+            const id = req.params.id
+            await ServiceProduto.Deletar(id)
+
+            res.status(204).send()
+
         } catch (error) {
             res.status(500).send({ msg: error. message })
         }
